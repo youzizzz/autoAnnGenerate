@@ -10,8 +10,11 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.ClassDoc;
@@ -22,11 +25,14 @@ import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.Parameter;
 import com.sun.javadoc.RootDoc;
 import com.sun.tools.doclets.standard.Standard;
+import com.sun.tools.internal.ws.processor.model.Request;
+import com.youzi.autoAnn.Annotation.Igone;
 
 public class DocletUtil extends Doclet {
 	public static RootDoc roots;
 	private static String fName;
-	
+	public static boolean flag = true;
+
 	public static boolean start(RootDoc root) {
 		roots = root;
 		// show(roots);
@@ -75,7 +81,7 @@ public class DocletUtil extends Doclet {
 	public static void getVoProperties(Map<String, Map<String, Object>> map) {
 		ClassDoc[] classes = roots.classes();
 		Map<String, Object> value = new HashMap<String, Object>();
-		Map<String,Object> voMap=new HashMap<String, Object>();
+		Map<String, Object> voMap = new HashMap<String, Object>();
 		String className = null;
 		for (int i = 0; i < classes.length; ++i) {
 			className = classes[i].name();
@@ -83,8 +89,20 @@ public class DocletUtil extends Doclet {
 			// System.out.println(className);
 
 			for (FieldDoc field : classes[i].fields(false)) {
+				flag = true;
 				AnnotationDesc[] ann = field.annotations();
-				voMap.put(field.name(), field.commentText());
+				Arrays.asList(ann).parallelStream().forEach(a -> {
+					if (Igone.class.getName()
+							.substring(
+									Igone.class.getName().lastIndexOf(".") + 1)
+							.equals(a.annotationType().name())) {
+						flag = false;
+						return;
+					}
+				});
+				if (flag) {
+					voMap.put(field.name(), field.commentText());
+				}
 			}
 			voMap.put("classAnn", classes[i].getRawCommentText().trim());
 			voMap.put("className", classes[i]);
@@ -93,6 +111,18 @@ public class DocletUtil extends Doclet {
 		}
 	}
 
+	/**
+	 * 获取Controller里面属性的值
+	 * 
+	 * @param map
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws IOException
+	 */
 	public static void getControllerPro(Map<String, Map<String, Object>> map)
 			throws InstantiationException, IllegalAccessException,
 			NoSuchMethodException, SecurityException, IllegalArgumentException,
@@ -101,10 +131,7 @@ public class DocletUtil extends Doclet {
 		Map<String, Object> value = new HashMap<String, Object>();
 		String className = null;
 		for (int i = 0; i < classes.length; ++i) {
-			System.out.println("classname-->" + classes[i].name());
 			className = classes[i].name();
-			className = className.replace(".java", "").trim();
-			// System.out.println(className);
 			for (MethodDoc method : classes[i].methods()) {
 				AnnotationDesc[] ann = method.annotations();
 				boolean flag = false;
@@ -114,34 +141,41 @@ public class DocletUtil extends Doclet {
 					if (annotationDesc.annotationType().toString().contains(
 							"org.springframework.web.bind.annotation.GetMapping")) {
 						flag = true;
-						
+
 						break;
 					}
 				}
 				parms.put("outType", method.returnType().toString());
 				if (flag) {
-					Map<String,Object> methodParm=new HashMap<String, Object>();
+					Map<String, Object> methodParm = new HashMap<String, Object>();
 					Parameter[] params = method.parameters();
+					System.out.println(classes[i].name());
 					for (Parameter parameter : params) {
 						Map<String, Object> inParm = new HashMap<String, Object>();
 						inParm.put(parameter.typeName(), parameter.name());
 						parms.put("inParm", inParm);
-						getMethodAnn(className, methodParm, method.name());
-						methodParm.put("parms", parms);
-						methodParm.put("Ann", method.getRawCommentText().replace("\t", "").trim());
 					}
-					value.put(method.name(),methodParm );
+					getMethodAnn(className, methodParm, method.name());
+					methodParm.put("Ann", method.getRawCommentText()
+							.replace("\t", "").trim());
+					methodParm.put("parms", parms);
+					value.put(method.name(), methodParm);
+					value.put("classAnnotation", classes[i].getRawCommentText().trim());
 				}
 			}
 			map.put(className, value);
 		}
 	}
-	
+
 	/**
 	 * 根据方法名获取上面的注解
-	 * @param name Controller名字
-	 * @param map 值 用来存放getMapping里面的参数
-	 * @param methodName 单个方法名
+	 * 
+	 * @param name
+	 *            Controller名字
+	 * @param map
+	 *            值 用来存放getMapping里面的参数
+	 * @param methodName
+	 *            单个方法名
 	 * @throws IOException
 	 */
 	public static void getMethodAnn(String name, Map<String, Object> map,
@@ -168,11 +202,47 @@ public class DocletUtil extends Doclet {
 							AnnMap.put("name", get.name());
 							AnnMap.put("path", Arrays.toString(get.path()));
 							AnnMap.put("params", Arrays.toString(get.params()));
-							AnnMap.put("headers", Arrays.toString(get.headers()));
-							AnnMap.put("consumes", Arrays.toString(get.consumes()));
-							AnnMap.put("produces", Arrays.toString(get.produces()));
+							AnnMap.put("headers",
+									Arrays.toString(get.headers()));
+							AnnMap.put("consumes",
+									Arrays.toString(get.consumes()));
+							AnnMap.put("produces",
+									Arrays.toString(get.produces()));
 							map.put("requestParm", AnnMap);
 						}
+						Arrays.asList(me.getParameters()).parallelStream()
+								.forEach(parm -> {
+									if (null != parm.getAnnotation(
+											RequestParam.class)) {
+										RequestParam requestParam = parm
+												.getAnnotation(
+														RequestParam.class);
+										Map<String, Object> reqParm = new HashMap<String, Object>();
+										reqParm.put("value",
+												requestParam.value());
+										reqParm.put("name",
+												requestParam.name());
+										reqParm.put("required",
+												requestParam.required());
+										map.put("methodRequestParam", reqParm);
+									} else {
+										if (null != parm.getAnnotation(
+												PathVariable.class)) {
+											PathVariable pathVariable = parm
+													.getAnnotation(
+															PathVariable.class);
+											Map<String, Object> pathVariableInit = new HashMap<String, Object>();
+											pathVariableInit.put("value",
+													pathVariable.value());
+											pathVariableInit.put("name",
+													pathVariable.name());
+											pathVariableInit.put("required",
+													pathVariable.required());
+											map.put("pathVariable",
+													pathVariableInit);
+										}
+									}
+								});
 					}
 				}
 			} catch (Exception e) {
@@ -181,11 +251,14 @@ public class DocletUtil extends Doclet {
 			}
 		}
 	}
-	
+
 	/**
 	 * 根据文件名拿到一个Class用来获取注解值
-	 * @param fileName 文件名字
-	 * @param controllerName 控制器名字
+	 * 
+	 * @param fileName
+	 *            文件名字
+	 * @param controllerName
+	 *            控制器名字
 	 */
 	public static void getFileByPathName(String fileName,
 			String controllerName) {
