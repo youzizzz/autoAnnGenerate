@@ -6,12 +6,13 @@ import java.lang.reflect.InvocationTargetException;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.youzi.autoAnn.util.DoclectAnnUtil;
 import com.youzi.autoAnn.util.DocletUtil;
 
-@SpringBootApplication
+@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
 @EnableWebMvc
 @MapperScan("com.youzi.autoAnn.dao")
 public class MainApplication 
@@ -34,6 +35,7 @@ public class MainApplication
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

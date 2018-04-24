@@ -1,5 +1,55 @@
 Manifest-Version: 1.0
 Built-By: Administrator
+Class-Path: ./ lib/spring-boot-maven-plugin-2.0.0.RELEASE.jar lib/spri
+ ng-boot-loader-tools-2.0.0.RELEASE.jar lib/spring-core-5.0.4.RELEASE.
+ jar lib/spring-jcl-5.0.4.RELEASE.jar lib/commons-compress-1.14.jar li
+ b/maven-archiver-2.6.jar lib/maven-shared-utils-0.7.jar lib/jsr305-2.
+ 0.1.jar lib/plexus-interpolation-1.21.jar lib/maven-artifact-3.1.1.ja
+ r lib/maven-core-3.1.1.jar lib/maven-settings-builder-3.1.1.jar lib/m
+ aven-repository-metadata-3.1.1.jar lib/maven-model-builder-3.1.1.jar 
+ lib/maven-aether-provider-3.1.1.jar lib/aether-spi-0.9.0.M2.jar lib/a
+ ether-impl-0.9.0.M2.jar lib/aether-api-0.9.0.M2.jar lib/aether-util-0
+ .9.0.M2.jar lib/org.eclipse.sisu.plexus-0.0.0.M5.jar lib/cdi-api-1.0.
+ jar lib/jsr250-api-1.0.jar lib/javax.inject-1.jar lib/guava-10.0.1.ja
+ r lib/sisu-guice-3.1.0-no_aop.jar lib/aopalliance-1.0.jar lib/org.ecl
+ ipse.sisu.inject-0.0.0.M5.jar lib/plexus-classworlds-2.5.1.jar lib/pl
+ exus-component-annotations-1.5.5.jar lib/plexus-sec-dispatcher-1.3.ja
+ r lib/plexus-cipher-1.4.jar lib/maven-model-3.1.1.jar lib/maven-plugi
+ n-api-3.1.1.jar lib/maven-settings-3.1.1.jar lib/maven-common-artifac
+ t-filters-1.4.jar lib/maven-project-2.0.8.jar lib/maven-profile-2.0.8
+ .jar lib/maven-artifact-manager-2.0.8.jar lib/wagon-provider-api-1.0-
+ beta-2.jar lib/maven-plugin-registry-2.0.8.jar lib/plexus-container-d
+ efault-1.5.5.jar lib/xbean-reflect-3.4.jar lib/log4j-1.2.12.jar lib/c
+ ommons-logging-api-1.1.jar lib/google-collections-1.0.jar lib/junit-3
+ .8.2.jar lib/plexus-archiver-2.8.1.jar lib/plexus-io-2.3.2.jar lib/pl
+ exus-utils-3.0.24.jar lib/plexus-build-api-0.0.7.jar lib/spring-boot-
+ starter-thymeleaf-2.0.0.RELEASE.jar lib/spring-boot-starter-2.0.0.REL
+ EASE.jar lib/spring-boot-starter-logging-2.0.0.RELEASE.jar lib/logbac
+ k-classic-1.2.3.jar lib/logback-core-1.2.3.jar lib/log4j-to-slf4j-2.1
+ 0.0.jar lib/log4j-api-2.10.0.jar lib/jul-to-slf4j-1.7.25.jar lib/snak
+ eyaml-1.19.jar lib/thymeleaf-spring5-3.0.9.RELEASE.jar lib/thymeleaf-
+ 3.0.9.RELEASE.jar lib/attoparser-2.0.4.RELEASE.jar lib/unbescape-1.1.
+ 5.RELEASE.jar lib/slf4j-api-1.7.25.jar lib/thymeleaf-extras-java8time
+ -3.0.1.RELEASE.jar lib/spring-boot-starter-web-2.0.0.RELEASE.jar lib/
+ spring-boot-starter-json-2.0.0.RELEASE.jar lib/jackson-databind-2.9.4
+ .jar lib/jackson-annotations-2.9.0.jar lib/jackson-core-2.9.4.jar lib
+ /jackson-datatype-jdk8-2.9.4.jar lib/jackson-datatype-jsr310-2.9.4.ja
+ r lib/jackson-module-parameter-names-2.9.4.jar lib/hibernate-validato
+ r-6.0.7.Final.jar lib/validation-api-2.0.1.Final.jar lib/jboss-loggin
+ g-3.3.0.Final.jar lib/classmate-1.3.1.jar lib/spring-web-5.0.4.RELEAS
+ E.jar lib/spring-beans-5.0.4.RELEASE.jar lib/spring-webmvc-5.0.4.RELE
+ ASE.jar lib/spring-aop-5.0.4.RELEASE.jar lib/spring-context-5.0.4.REL
+ EASE.jar lib/spring-expression-5.0.4.RELEASE.jar lib/spring-boot-star
+ ter-tomcat-2.0.0.RELEASE.jar lib/javax.annotation-api-1.3.2.jar lib/t
+ omcat-embed-core-8.5.28.jar lib/tomcat-embed-el-8.5.28.jar lib/tomcat
+ -embed-websocket-8.5.28.jar lib/mysql-connector-java-5.1.30.jar lib/m
+ ybatis-spring-boot-starter-1.3.1.jar lib/spring-boot-starter-jdbc-1.5
+ .6.RELEASE.jar lib/tomcat-jdbc-8.5.16.jar lib/tomcat-juli-8.5.16.jar 
+ lib/spring-jdbc-4.3.10.RELEASE.jar lib/spring-tx-4.3.10.RELEASE.jar l
+ ib/mybatis-spring-boot-autoconfigure-1.3.1.jar lib/mybatis-3.4.5.jar 
+ lib/mybatis-spring-1.3.1.jar lib/spring-boot-2.0.0.RELEASE.jar lib/sp
+ ring-boot-autoconfigure-2.0.0.RELEASE.jar
 Build-Jdk: 1.8.0_131
 Created-By: Maven Integration for Eclipse
+Main-Class: com.youzi.autoAnn.MainApplication
 
